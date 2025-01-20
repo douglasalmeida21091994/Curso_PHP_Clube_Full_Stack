@@ -1,7 +1,7 @@
 <?php
 require '../../../bootstrap.php';
 
-dd($_POST);
+// dd($_POST);
 
 $validate = validate([
     'name' => 's',
@@ -9,3 +9,5 @@ $validate = validate([
     'assunto' => 's',
     'message' => 's'
 ]);
+
+dd($validate->name);
