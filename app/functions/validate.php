@@ -5,7 +5,7 @@
 
            switch($type) {
                case 's':
-                   $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_STRING);
+                   $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                    break;
                case 'e':
                    $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL);
@@ -17,7 +17,7 @@
                    $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_NUMBER_FLOAT);
                    break;
                default:
-                   $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_STRING);
+                   $validate[$field] = filter_input(INPUT_POST, $field, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                    break;
            }
         }
