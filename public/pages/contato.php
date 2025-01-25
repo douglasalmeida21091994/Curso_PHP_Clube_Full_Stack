@@ -1,7 +1,9 @@
 
 <h2>Página de contatos</h2>
 
-<form action="/pages/forms/contato.php" method="get" class="container mt-5">
+<?= getFlash('message') ?>
+
+<form action="/pages/forms/contato.php" method="post" class="container mt-5">
     <legend>Formulário</legend>
 
     <div class="form-group">

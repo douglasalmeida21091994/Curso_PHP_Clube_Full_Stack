@@ -1,9 +1,13 @@
 <?php
 require '../../../bootstrap.php';
 
-// dd($_SERVER['REQUEST_METHOD']);
+if (isEmpty()) {
+   
+    flash('message', 'Preencha todos os campos', 'danger');
 
-// dd($_POST);
+    header('Location:/?page=contato');
+   
+}
 
 $validate = validate([
     'name' => 's',

@@ -27,4 +27,18 @@ function validate(array $fields) {
 
     return (object) $validate;
 }
+
+function isEmpty() {
+    $request = request();
+    $isEmpty = false;
+
+    foreach ($request as $key => $value) {
+        if (empty($value)) {
+            $isEmpty = true;
+        }
+    }
+
+    return $isEmpty;
+}
+
 ?>
