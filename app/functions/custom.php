@@ -8,4 +8,8 @@ if (!function_exists('dd')) {
         die();
     }
 }
+
+function request() {
+    return $_REQUEST;
+}
 ?>

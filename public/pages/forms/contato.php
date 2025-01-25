@@ -1,6 +1,8 @@
 <?php
 require '../../../bootstrap.php';
 
+// dd($_SERVER['REQUEST_METHOD']);
+
 // dd($_POST);
 
 $validate = validate([
