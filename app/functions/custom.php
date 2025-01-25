@@ -12,4 +12,13 @@ if (!function_exists('dd')) {
 function request() {
     return $_REQUEST;
 }
+
+function redirect($url) {
+    return header('Location:/?page=' . $url);
+}
+
+function redirectToHome() {
+    return header('Location:/');
+}
+
 ?>
