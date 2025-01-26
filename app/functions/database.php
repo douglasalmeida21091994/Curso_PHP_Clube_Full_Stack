@@ -32,14 +32,64 @@ function create($table, $fields) {
 
 }
 
-function update() {
+function all($table) {
+    $pdo = connect();
+    $sql = "SELECT * FROM $table WHERE situacao = 1";
+    $all = $pdo->prepare($sql);
+    $all->execute();
+    return $all->fetchAll();
+}
+
+function update($table, $fields) {
+    $pdo = connect();
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $fields = (array) $fields;
+    $fields['id'] = $id;
+
+    $sql = "UPDATE $table SET ";
+
+    foreach ($fields as $key => $value) {
+        if ($key !== 'id') {
+            $sql .= "$key = :$key, ";
+        }
+    }
+
+    $sql = rtrim($sql, ', ');
+    $sql .= " WHERE id = :id";
+    $update = $pdo->prepare($sql);
+
+    return $update->execute($fields);
 
 }
 
-function find() {
+function find($table, $id) {
+    $pdo = connect();
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+    $sql = "SELECT * FROM $table WHERE id = :id";
+    $find = $pdo->prepare($sql);
+    $find->bindValue(':id', $id);
+    $find->execute();
+    return $find->fetch();
+
+    dd($find->fetch());
 
 }
 
-function delete() {
+function delete($table, $id, $situacao) {
+    $pdo = connect();
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+    $situacao = filter_var($situacao, FILTER_VALIDATE_INT);
 
+    // Verifique se os valores são válidos
+    if ($id && $situacao !== false) {
+        $sql = "UPDATE $table SET situacao = :situacao WHERE id = :id";
+        $delete = $pdo->prepare($sql);
+        $delete->bindValue(':id', $id, PDO::PARAM_INT);
+        $delete->bindValue(':situacao', $situacao, PDO::PARAM_INT);  
+        
+        // Execute e retorne o resultado
+        return $delete->execute();
+    } else {
+        return false;
+    }
 }
