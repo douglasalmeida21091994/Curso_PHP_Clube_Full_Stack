@@ -71,9 +71,22 @@ function find($table, $id) {
     $find->execute();
     return $find->fetch();
 
-    dd($find->fetch());
+    // dd($find->fetch());
 
 }
+
+function select($table, $email) {
+    $pdo = connect();
+    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+    $sql = "SELECT * FROM $table WHERE email = :email";
+    $find = $pdo->prepare($sql);
+    $find->bindValue(':email', $email);
+    $find->execute();
+    
+    // Retorna o resultado como objeto ou null se não encontrar nenhum
+    return $find->fetch();
+}
+
 
 function delete($table, $id, $situacao) {
     $pdo = connect();

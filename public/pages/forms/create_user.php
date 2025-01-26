@@ -2,11 +2,8 @@
 require '../../../bootstrap.php';
 
 if (isEmpty()) {
-   
     flash('message', 'Preencha todos os campos', 'danger');
-
     return redirect('create_user');
-   
 }
 
 $validate = validate([
@@ -16,9 +13,16 @@ $validate = validate([
     'password' => 's'
 ]);
 
-$cadastrado = create('users', $validate);
+// Verifica se já existe um usuário com o mesmo email
+$emailExiste = select('users', $validate->email);
 
-// dd($cadastrado);
+// Verifica se o e-mail já existe
+if ($emailExiste) {
+    flash('message', 'Este e-mail já está cadastrado', 'danger');
+    return redirect('create_user');
+}
+
+$cadastrado = create('users', $validate);
 
 if ($cadastrado) {
     flash('message', 'Usuário cadastrado com sucesso', 'success');
@@ -27,5 +31,4 @@ if ($cadastrado) {
     flash('message', 'Erro ao cadastrar usuário', 'danger');
     return redirect('create_user');
 }
-
 ?>
