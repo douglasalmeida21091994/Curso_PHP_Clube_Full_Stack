@@ -1,5 +1,6 @@
+<?= getFlash('message') ?>
 
-<form action="create_user.php" method="post">
+<form action="/pages/forms/create_user.php" method="post">
     <legend>Cadastro de Usuário</legend>
 
     <div class="form-group">
