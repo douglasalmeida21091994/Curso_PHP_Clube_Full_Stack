@@ -5,28 +5,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Home</title>
-    <!-- jqyery, este deve ser carregado antes do DataTable e não pode haver erros no console para não interromper o carregamento -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-    <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <style>
+        /* General Layout Adjustments */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0px 0px 20px 0px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #4a3fc5;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;            
+        }
+
+        a,
+        button {
+            font-size: 1em;
+            text-decoration: none;
+            padding: 12px 20px;
+            color: #fff;
+            background-color: #4a3fc5;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        a:hover,
+        button:hover {
+            background-color: #6b52b6;
+        }
+
+        /* Table Styles */
+        #users-table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        #users-table thead th {
+            background-color: rgba(74, 63, 197, 0.82);
+            color: white;
+            font-weight: bold;                    
+            text-align: center;
+        }      
+
+        /* Afasta o botão de procurar 10px da tabela */
+        .dataTables_filter {
+            margin-bottom: 10px;
+        }
+
+        .dataTables_filter input {
+            margin-left: 10px;
+            width: 500px;
+        }
+
+        #users-table tbody td {
+            text-align: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Alternating Row Colors */
+        #users-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        #users-table tbody tr:nth-child(even) {
+            background-color: #f0f0f0;
+        }
+
+        /* Hover Effect */
+        #users-table tbody tr:hover {
+            background-color: #d6d6d6;
+        }
+
+        /* Modal Styles */
         #dialog-modal {
             max-width: 800px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            transition: all 0.3s;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         #dialog-modal h1 {
-            background-color: rgba(74, 63, 197, 0.66);
-            padding: 5px;
+            background-color: rgba(74, 63, 197, 0.9);
+            padding: 12px;
             margin: 0;
-            margin-bottom: 10px;
-            border-radius: 5px;
+            border-radius: 5px 5px 0 0;
             text-align: center;
             font-size: 1.5em;
             font-weight: bolder;
@@ -34,43 +117,41 @@
         }
 
         #dialog-modal p {
-            padding: 10px 0px;
-            font-size: 1.2em;
+            padding: 15px;
+            font-size: 1.1em;
             text-align: justify;
         }
 
         #dialog-modal::backdrop {
-            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
 
         .close {
             text-align: center;
+            margin-top: 20px;
         }
 
         #fechar-modal {
-            padding: 8px 15px;
+            padding: 12px 20px;
             background-color: rgb(216, 56, 56);
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         #fechar-modal:hover {
             background-color: rgb(216, 56, 56, 0.8);
         }
 
+        /* Footer Typing Effect */
         #footer {
             text-align: center;
-            margin-top: 10px;
-            font-size: 1.1em;
+            margin-top: 20px;
+            font-size: 1.2em;
             font-weight: bold;
-            background: linear-gradient(135deg, rgb(75, 63, 197) 0%, rgb(79, 145, 214) 100%);
-            -webkit-background-clip: text;
-            color: transparent;
-            opacity: .8;
+            color: rgba(74, 63, 197, 0.8);
         }
 
         .typing {
@@ -79,87 +160,58 @@
             overflow: hidden;
         }
 
-        /* PERSONALIZAÇÃO DA TABELA */
-        #users-table thead th {
-            background-color:rgba(74, 63, 197, 0.82);
-            /* Azul personalizado */
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;            
+            /* padding: 0 15px; */
+           
         }
 
-        #users-table tbody td {
-            text-align: center;
-            padding: 10px;
-        }
-
-        /* Linhas alternadas */
-        #users-table tbody tr:nth-child(odd) {
-            background-color: #f2f2f2;
-        }
-
-        #users-table tbody tr:nth-child(even) {
-            background-color: #e6e6e6;
-        }
-
-        /* Hover nas linhas */
-        #users-table tbody tr:hover {
-            background-color: #d6d6d6;
-        }
-
-       
-        /* Estilização geral dos botões de paginação */
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            background-color: #4a3fc5 !important;
-            /* Cor de fundo personalizada */
-            color: #fff !important;
-            /* Cor do texto branca */
-            border: 1px solid #4a3fc5 !important;
-            /* Borda com a mesma cor do fundo */
-            padding: 8px 12px;
-            margin: 0 3px;
+        /* Botões de navegação do DataTables */
+        .dataTables_paginate .paginate_button {
+            background-color: #e0e0e0;            
+            color: #333;            
+            border: 1px solid #ddd;            
+            /* padding: 8px 16px; */
+            margin: 0 2px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Estilo do botão da página atual (selecionada) */
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background-color: #fff !important;
-            /* Fundo branco */
-            color: #000 !important;
-            /* Texto preto */
-            font-weight: bold;
-            border: 1px solid #4a3fc5 !important;
+        /* Estilo do botão da página atual - mais escuro */
+        .dataTables_paginate .paginate_button.current {
+            background-color: #4a3fc5;           
+            color: white;  
+            border: 1px solid #4a3fc5; 
         }
 
-        /* Efeito hover nos botões de paginação */
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background-color: #4a3fc5 !important;
-            /* Mantém a cor de fundo */
-            color: #fff !important;
-            border-color: #4a3fc5 !important;
+        /* Hover para os botões de navegação */
+        .dataTables_paginate .paginate_button:hover {
+            background-color: #b0b0b0;            
+            color: #fff;            
         }
 
-        /* Botões desativados (quando não há mais páginas) */
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-            background-color: #4a3fc5 !important;
-            /* Mantém a mesma cor para consistência */
-            color: #fff !important;
-            cursor: not-allowed;
-            opacity: 0.6;
-            /* Reduz a opacidade para indicar desativado */
+        /* Ajuste de foco nos botões de navegação */
+        .dataTables_paginate .paginate_button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 63, 197, 0.5);            
         }
+
     </style>
 
 </head>
 
-<body>       
+<body>
 
     <h2>Página Home</h2>
 
-    <a href="?page=create_user">Cadastro de Usuário</a>
-    <button id="abrir-modal">Abrir Modal</button>
+    <div class="button-container">
+        <a href="?page=create_user">Cadastro de Usuário</a>
+        <button id="abrir-modal">Abrir Modal</button>
+    </div>
 
     <table id="users-table" class="display">
         <thead>
@@ -167,8 +219,6 @@
                 <th>ID</th>
                 <th>Nome Completo</th>
                 <th>Email</th>
-                <!-- <th>Telefone</th>
-            <th>Endereço</th> -->
                 <th>Ações</th>
             </tr>
         </thead>
@@ -180,10 +230,8 @@
                     <td><?= $user->id ?></td>
                     <td><?= $user->nome . ' ' . $user->sobrenome ?></td>
                     <td><?= $user->email ?></td>
-                    <!-- <td><?= $user->phone ?></td>
-                <td><?= $user->address ?></td> -->
                     <td>
-                        <a href="?page=edit_user&id=<?= $user->id ?>" class="btn btn-success" >Editar</a>
+                        <a href="?page=edit_user&id=<?= $user->id ?>" class="btn btn-success">Editar</a>
                         <a href="?page=delete_user&id=<?= $user->id ?>&situacao=0" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
@@ -243,15 +291,15 @@
 
         $(document).ready(function() {
             $('#users-table').DataTable({
-                "responsive": true, // Responsividade
-                "autoWidth": false, // Evita larguras automáticas
-                "lengthChange": true, // Desabilita a opção de escolher a quantidade de registros por página
-                "lengthMenu": [10, 25, 50, 75, 100], // Quantidade de registros por página
-                "pageLength": 10, // Quantidade de registros por página
-                "searching": true, // Campo de busca
-                "ordering": true, // Ordenação            
+                "responsive": true,
+                "autoWidth": false,
+                "lengthChange": true,
+                "lengthMenu": [10, 25, 50, 75, 100],
+                "pageLength": 10,
+                "searching": true,
+                "ordering": true,
                 "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json" // Tradução para português
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
                 }
             });
         });
