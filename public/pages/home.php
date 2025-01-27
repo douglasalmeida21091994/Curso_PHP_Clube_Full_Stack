@@ -30,7 +30,7 @@
 
         .button-container {
             text-align: center;
-            margin-bottom: 20px;            
+            margin-bottom: 20px;
         }
 
         a,
@@ -62,9 +62,9 @@
         #users-table thead th {
             background-color: rgba(74, 63, 197, 0.82);
             color: white;
-            font-weight: bold;                    
+            font-weight: bold;
             text-align: center;
-        }      
+        }
 
         /* Afasta o botão de procurar 10px da tabela */
         .dataTables_filter {
@@ -160,20 +160,20 @@
             overflow: hidden;
         }
 
-        
+
         .container {
             width: 100%;
             max-width: 1400px;
-            margin: 0 auto;            
+            margin: 0 auto;
             /* padding: 0 15px; */
-           
+
         }
 
         /* Botões de navegação do DataTables */
         .dataTables_paginate .paginate_button {
-            background-color: #e0e0e0;            
-            color: #333;            
-            border: 1px solid #ddd;            
+            background-color: #e0e0e0;
+            color: #333;
+            border: 1px solid #ddd;
             /* padding: 8px 16px; */
             margin: 0 2px;
             border-radius: 5px;
@@ -183,29 +183,64 @@
 
         /* Estilo do botão da página atual - mais escuro */
         .dataTables_paginate .paginate_button.current {
-            background-color: #4a3fc5;           
-            color: white;  
-            border: 1px solid #4a3fc5; 
+            background-color: #4a3fc5;
+            color: white;
+            border: 1px solid #4a3fc5;
         }
 
         /* Hover para os botões de navegação */
         .dataTables_paginate .paginate_button:hover {
-            background-color: #b0b0b0;            
-            color: #fff;            
+            background-color: #b0b0b0;
+            color: #fff;
         }
 
         /* Ajuste de foco nos botões de navegação */
         .dataTables_paginate .paginate_button:focus {
             outline: none;
-            box-shadow: 0 0 5px rgba(74, 63, 197, 0.5);            
+            box-shadow: 0 0 5px rgba(74, 63, 197, 0.5);
         }
 
+        /* LOADING */
+        .loader {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-block;
+            border-top: 4px solid #FFF;
+            border-right: 4px solid transparent;
+            box-sizing: border-box;
+            animation: spin  1s linear infinite;
+        }
+
+        .loader::after {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border-left: 4px solid #FF3D00;
+            border-bottom: 4px solid transparent;
+            animation: spin  0.5s linear infinite reverse;
+        }
+
+        @keyframes spin  {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
 </head>
 
 <body>
-
+   
     <h2>Página Home</h2>
 
     <div class="button-container">
@@ -213,7 +248,9 @@
         <button id="abrir-modal">Abrir Modal</button>
     </div>
 
-    <table id="users-table" class="display">
+    <span class="loader" id="loading"></span>
+
+    <table id="users-table" display class="content" style="display: none;">
         <thead>
             <tr>
                 <th>ID</th>
@@ -303,6 +340,15 @@
                 }
             });
         });
+
+        // Aguarda o carregamento da página
+        window.addEventListener("load", function() {
+            // Esconde o loader
+            document.getElementById("loading").style.display = "none";
+            // Exibe o conteúdo principal
+            document.querySelector(".content").style.display = "";
+        });
+        
     </script>
 
 </body>
