@@ -2,14 +2,22 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Home</title>
+    <!-- favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">   
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
 
     <style>
         /* General Layout Adjustments */
@@ -270,6 +278,7 @@
                     <td>
                         <a href="?page=edit_user&id=<?= $user->id ?>" class="btn btn-success">Editar</a>
                         <a href="?page=delete_user&id=<?= $user->id ?>&situacao=0" class="btn btn-danger">Excluir</a>
+                        <input type="checkbox" name="horarios" id="<?= $user->id ?>" value="<?= $user->id ?>"> 
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -286,7 +295,8 @@
         <div id="footer"></div>
     </dialog>
 
-    <script>
+    <script type="text/javascript">   
+
         const abrirModal = document.getElementById('abrir-modal');
         const fecharModal = document.getElementById('fechar-modal');
         const dialogModal = document.getElementById('dialog-modal');
@@ -347,6 +357,23 @@
             document.getElementById("loading").style.display = "none";
             // Exibe o conteúdo principal
             document.querySelector(".content").style.display = "";
+        });  
+        
+        // Checkbox click handler - Fixed syntax
+        $('input[name="horarios"]').on('click', function() {
+            const userId = $(this).val();
+            const isChecked = $(this).is(':checked');
+            console.log('User ID:', userId);
+            console.log('Checked:', isChecked);
+            
+            // You can add your logic here, for example:
+            if(isChecked) {
+                // Handle checked state
+                console.log("Clicou para agendar o " + userId);
+            } else {
+                // Handle unchecked state
+                console.log("Clicou para desmarcar o " + userId);
+            }
         });
         
     </script>
