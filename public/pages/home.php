@@ -2,15 +2,15 @@
 <html lang="pt-br">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Home</title>
     <!-- favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">   
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -217,7 +217,7 @@
             border-top: 4px solid #FFF;
             border-right: 4px solid transparent;
             box-sizing: border-box;
-            animation: spin  1s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
         .loader::after {
@@ -231,10 +231,10 @@
             border-radius: 50%;
             border-left: 4px solid #FF3D00;
             border-bottom: 4px solid transparent;
-            animation: spin  0.5s linear infinite reverse;
+            animation: spin 0.5s linear infinite reverse;
         }
 
-        @keyframes spin  {
+        @keyframes spin {
             0% {
                 transform: rotate(0deg);
             }
@@ -248,7 +248,7 @@
 </head>
 
 <body>
-   
+
     <h2>Página Home</h2>
 
     <div class="button-container">
@@ -278,7 +278,7 @@
                     <td>
                         <a href="?page=edit_user&id=<?= $user->id ?>" class="btn btn-success">Editar</a>
                         <a href="?page=delete_user&id=<?= $user->id ?>&situacao=0" class="btn btn-danger">Excluir</a>
-                        <input type="checkbox" name="horarios" id="<?= $user->id ?>" value="<?= $user->id ?>"> 
+                        <input type="checkbox" name="horarios" id="<?= $user->id ?>" value="<?= $user->id ?>">
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -295,8 +295,7 @@
         <div id="footer"></div>
     </dialog>
 
-    <script type="text/javascript">   
-
+    <script type="text/javascript">
         const abrirModal = document.getElementById('abrir-modal');
         const fecharModal = document.getElementById('fechar-modal');
         const dialogModal = document.getElementById('dialog-modal');
@@ -357,17 +356,17 @@
             document.getElementById("loading").style.display = "none";
             // Exibe o conteúdo principal
             document.querySelector(".content").style.display = "";
-        });  
-        
+        });
+
         // Checkbox click handler - Fixed syntax
         $('input[name="horarios"]').on('click', function() {
             const userId = $(this).val();
             const isChecked = $(this).is(':checked');
             console.log('User ID:', userId);
             console.log('Checked:', isChecked);
-            
+
             // You can add your logic here, for example:
-            if(isChecked) {
+            if (isChecked) {
                 // Handle checked state
                 console.log("Clicou para agendar o " + userId);
             } else {
@@ -375,7 +374,6 @@
                 console.log("Clicou para desmarcar o " + userId);
             }
         });
-        
     </script>
 
 </body>

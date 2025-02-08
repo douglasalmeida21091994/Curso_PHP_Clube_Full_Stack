@@ -23,12 +23,12 @@ if ($emailExiste) {
 }
 
 $cadastrado = create('users', $validate);
-
 if ($cadastrado) {
     flash('message', 'Usuário cadastrado com sucesso', 'success');
     return redirect('create_user');
 } else {
-    flash('message', 'Erro ao cadastrar usuário', 'danger');
+    flash('message', 'Erro ao cadastrar usuário', 'error');
     return redirect('create_user');
 }
+
 ?>
